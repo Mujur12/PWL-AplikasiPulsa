@@ -1,17 +1,19 @@
 <?php
 
 
-class ModelBarang extends CI_Model {
-	var $table = "barang";
-	var $primaryKey = "id_barang";
+class ModelItemTransaksi extends CI_Model {
+	var $table = "item_transaksi";
+	var $primaryKey = "id_item_transaksi";
 
 	public function insert($data) {
 		return $this->db->insert($this->table, $data);
 	}
 
+	public function insertBatch($data) {
+		return $this->db->insert_batch($this->table, $data);
+	}
+
 	public function getAll() {
-		//hanya mengembalikan data yang is_active = 1
-		$this->db->where("is_active", 1);
 		return $this->db->get($this->table)->result();
 	}
 
