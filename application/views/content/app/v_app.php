@@ -48,7 +48,7 @@
 		<div class="card">
 			<div class="card-header"><h5>Item Transaksi</h5></div>
 			<div class="card-body">
-				<table class="table">
+				<table id="table-item" class="table">
 					<thead>
 					<tr>
 						<th>Kode</th>
@@ -65,13 +65,17 @@
 				</table>
 			</div>
 			<div class="card-footer">
-
+				<button type="button" id="btn-save-transaksi" class="btn btn-primary float-right">
+					<i class="fas fa-save"></i> Simpan
+				</button>
 			</div>
 		</div>
 	</div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
 <script>
     $(function () {
+        let barang;
         $("#select-barang")
             .select2()
             .on("change", function () {
@@ -81,5 +85,67 @@
                 $("#harga-barang").val(optionSelected.data("harga"));
                 $("#jumlah-barang").val(1);
             });
+
+        $("#btn-add-item").on("click", function () {
+            let id = $("#select-barang").val();
+            let kodeBarang = $("#kode-barang").val();
+            let namaBarang = $("#nama-barang").val();
+            let hargaBarang = $("#harga-barang").val();
+            let jumlahBarang = $("#jumlah-barang").val();
+            let subTotal = parseInt(hargaBarang) * parseInt(jumlahBarang);
+            if (kodeBarang != "") {
+                let tr = `<tr data-id="${id}">`;
+                tr += `<td>${kodeBarang}</td>`;
+                tr += `<td>${namaBarang}</td>`;
+                tr += `<td>${hargaBarang}</td>`;
+                tr += `<td>${jumlahBarang}</td>`;
+                tr += `<td>${subTotal}</td>`;
+                tr += `<td>`;
+                tr += `<button class="btn btn-xs btn-del-item btn-danger"> <i class="fas fa-trash"></i></button>`;
+                tr += `</td>`;
+                tr += `</tr>`;
+                $("#table-item tbody").append(tr);
+                $("#select-barang").val("").trigger("change");
+                $("#kode-barang").val();
+                $("#nama-barang").val();
+                $("#harga-barang").val();
+                $("#jumlah-barang").val(1);
+                $(".btn-del-item").on("click", function () {
+                    $(this).parent().parent().remove();
+                });
+            }
+        });
+        $("#btn-save-transaksi").on("click", function () {
+            $.LoadingOverlay("show");
+            let rows = $("#table-item tbody tr");
+            let itemTransaksi = [];
+            rows.each(function () {
+                let row = $(this);
+                let item = {
+                    id_barang: row.data("id"),
+                    harga_item_transaksi: row.children().eq(2).text(),
+                    qty_item_transaksi: row.children().eq(3).text(),
+                    total_item_transaksi: row.children().eq(4).text(),
+                };
+                itemTransaksi.push(item);
+            });
+            let dataKirim = JSON.stringify(itemTransaksi);
+            $.ajax({
+                url: window.base_url + "app/proses_transaksi",
+                type: "POST",
+                data: {
+                    item_transaksi: dataKirim
+                },
+                success: function (result) {
+					if(parseInt(result) > 0){
+					    //success
+						window.location.replace(window.base_url+"app");
+					}else{
+					    //error
+					}
+                    $.LoadingOverlay("hide");
+                }
+            });
+        });
     });
 </script>

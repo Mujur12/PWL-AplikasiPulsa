@@ -38,6 +38,9 @@
 	<script src="<?= base_url() . 'assets/' ?>plugins/jquery/jquery.min.js"></script>
 	<!-- jQuery UI 1.11.4 -->
 	<script src="<?= base_url() . 'assets/' ?>plugins/jquery-ui/jquery-ui.min.js"></script>
+	<script>
+		window.base_url = '<?= base_url() ?>';
+	</script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">

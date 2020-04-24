@@ -30,3 +30,5 @@ create table item_transaksi(
 );
 
 alter table barang add is_active tinyint default 1;
+
+alter table transaksi add nomor int default 0;
