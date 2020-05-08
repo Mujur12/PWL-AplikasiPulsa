@@ -5,6 +5,7 @@ class App extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model(array("ModelBarang", "ModelTransaksi", "ModelItemTransaksi"));
+		isLogin();
 	}
 
 	public function index() {
@@ -22,8 +23,9 @@ class App extends CI_Controller {
 		$itemTransaksi = json_decode($str_item_transaksi);
 		//1.cari dulu nilai terbesar dari id yang terakhir
 		$queryMaxId = "select ifnull(max(nomor),0) as max from transaksi "
-			. "WHERE MONTH(tanggal_transaksi) = MONTH(NOW()) AND YEAR(tanggal_transaksi)=MONTH(NOW())";
+			. "WHERE MONTH(tanggal_transaksi) = MONTH(NOW()) AND YEAR(tanggal_transaksi)=YEAR(NOW())";
 		$max = $this->db->query($queryMaxId)->row()->max;
+		$max = (int) $max;
 		// "TRX/2020/04/0120"
 		$strPad = str_pad($max + 1, 4, "0", STR_PAD_LEFT);
 		$noTransaksi = "TRX/" . date("Y/m") . "/" . $strPad;

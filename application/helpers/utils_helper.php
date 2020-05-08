@@ -1,5 +1,8 @@
 <?php
 
-function getJenisKelaminLengkap($jk) {
-	return ($jk == "L") ? "Laki-Laki" : "Perempuan";
+function isLogin(){
+	$ci = &get_instance();
+	if(!$ci->session->userdata('is_login_pwl')){
+		redirect("login");
+	}
 }

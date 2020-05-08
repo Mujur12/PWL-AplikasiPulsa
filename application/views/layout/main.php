@@ -201,10 +201,34 @@
 					<!-- Add icons to the links using the .nav-icon class
 						 with font-awesome or any other icon font library -->
 					<li class="nav-item">
+						<a href="<?= site_url("dashboard") ?>" class="nav-link">
+							<i class="nav-icon fas fa-tachometer-alt"></i>
+							<p>
+								Dashboard
+							</p>
+						</a>
+					</li>
+					<li class="nav-item">
 						<a href="<?= site_url("barang") ?>" class="nav-link">
 							<i class="nav-icon fas fa-boxes"></i>
 							<p>
 								Barang
+							</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="<?= site_url("app") ?>" class="nav-link">
+							<i class="nav-icon fas fa-cash-register"></i>
+							<p>
+								Aplikasi Kasir
+							</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="<?= site_url("transaksi") ?>" class="nav-link">
+							<i class="nav-icon fas fa-tasks"></i>
+							<p>
+								Transaksi
 							</p>
 						</a>
 					</li>

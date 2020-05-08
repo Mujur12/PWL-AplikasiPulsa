@@ -32,3 +32,17 @@ create table item_transaksi(
 alter table barang add is_active tinyint default 1;
 
 alter table transaksi add nomor int default 0;
+
+create table users(
+    id_user int not null primary key auto_increment,
+    nama_user varchar(100),
+    email_user varchar(100),
+    password_user varchar(200),
+    role_user enum("admin","kasir")
+);
+
+insert into users value (null,"Admin","admin@mail.com","$2y$10$065KApwfqfNTQ32ktF.PoOJFnEfMpMZkPMQlR2Nw8I7BLqDYC4saO","admin");
+
+alter table users
+add first_login tinyint default 1,
+add is_active tinyint default 1;

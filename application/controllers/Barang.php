@@ -5,6 +5,7 @@ class Barang extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model("ModelBarang");
+		isLogin();
 	}
 
 	public function index() {
