@@ -50,6 +50,9 @@
 		<a href="<?= site_url("barang/tambah") ?>" class="btn btn-primary">
 			<i class="fas fa-plus"></i> Tambah Barang
 		</a>
+		<a href="<?= site_url("report/barang") ?>" target="_blank" class="btn btn-success">
+			<i class="fas fa-file-excel"></i> Report Barang
+		</a>
 	</div>
 </div>
 
