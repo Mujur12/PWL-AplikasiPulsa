@@ -29,7 +29,8 @@
 					<td>
 						<img height="70"
 							 onerror="this.onerror=null;this.src='<?= base_url() . 'assets/images/no-image.png' ?>';"
-							 src="<?= $barang->gambar_barang ?>" alt="Gambar_Barang"/>
+							 src="<?= base_url()."upload/images/".$barang->gambar_barang ?>" alt="Gambar_Barang"/>
+
 					</td>
 					<td>
 						<a href="<?= site_url("barang/update/$barang->id_barang") ?>" class="btn btn-sm btn-warning">

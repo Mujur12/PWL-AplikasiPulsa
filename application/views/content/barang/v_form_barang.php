@@ -25,7 +25,7 @@
 				<label for="gambar-barang">Gambar Barang</label>
 				<div class="input-group">
 					<div class="custom-file">
-						<input type="file" name="gambar-barang" class="custom-file-input" id="gambar-barang">
+						<input type="file" name="gambar_barang" class="custom-file-input" id="gambar-barang">
 						<label class="custom-file-label" for="gambar-barang">Choose file</label>
 					</div>
 				</div>

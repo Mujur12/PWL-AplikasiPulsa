@@ -33,7 +33,17 @@ class Barang extends CI_Controller {
 			"harga_barang" => $this->input->post("harga"),
 			"stock_barang" => $this->input->post("stock"),
 		);
-		$this->ModelBarang->insert($barang);
+		$id = $this->ModelBarang->insertGetId($barang);
+		if ($id > 0) {
+			$uploadGambar = $this->uploadGambar("gambar_barang");
+
+			if ($uploadGambar["result"] == "success") {
+				$dataUpdate = array(
+					"gambar_barang" => $uploadGambar["file"]["file_name"],
+				);
+				$this->ModelBarang->update($id,$dataUpdate);
+			}
+		}
 		redirect("barang");
 	}
 
@@ -46,6 +56,7 @@ class Barang extends CI_Controller {
 		);
 		$this->load->view("layout/main", $data);
 	}
+
 	public function proses_update() {
 		$id = $this->input->post("id");
 		$barang = array(
@@ -54,7 +65,7 @@ class Barang extends CI_Controller {
 			"harga_barang" => $this->input->post("harga"),
 			"stock_barang" => $this->input->post("stock"),
 		);
-		$this->ModelBarang->update($id,$barang);
+		$this->ModelBarang->update($id, $barang);
 		redirect("barang");
 	}
 
@@ -62,5 +73,23 @@ class Barang extends CI_Controller {
 		$id = $this->input->post("id");
 		$this->ModelBarang->delete($id);
 		redirect("barang");
+	}
+
+	public function uploadGambar($field) {
+		$config = array(
+			"upload_path" => "upload/images/",
+			"allowed_types" => "jpg|jpeg|png",
+			"max_size" => "5000",
+			"remove_space" => true,
+			"encrypt_name" => true
+		);
+		$this->load->library("upload", $config);
+		if ($this->upload->do_upload($field)) {
+			$result = array("result" => "success", "file" => $this->upload->data(), "error" => "");
+			return $result;
+		} else {
+			$result = array("result" => "failed", "file" => "", "error" => $this->upload->display_errors());
+			return $result;
+		}
 	}
 }

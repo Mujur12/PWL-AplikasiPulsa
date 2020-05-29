@@ -9,6 +9,11 @@ class ModelBarang extends CI_Model {
 		return $this->db->insert($this->table, $data);
 	}
 
+	public function insertGetId($data) {
+		$this->db->insert($this->table, $data);
+		return $this->db->insert_id();
+	}
+
 	public function getAll() {
 		//hanya mengembalikan data yang is_active = 1
 		$this->db->where("is_active", 1);
