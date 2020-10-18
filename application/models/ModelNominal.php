@@ -1,19 +1,22 @@
 <?php
 
 
-class ModelItemTransaksi extends CI_Model {
-	var $table = "item_transaksi";
-	var $primaryKey = "id_item_transaksi";
+class ModelNominal extends CI_Model {
+	var $table = "nominal";
+	var $primaryKey = "id_nominal";
 
 	public function insert($data) {
 		return $this->db->insert($this->table, $data);
 	}
 
-	public function insertBatch($data) {
-		return $this->db->insert_batch($this->table, $data);
+	public function insertGetId($data) {
+		$this->db->insert($this->table, $data);
+		return $this->db->insert_id();
 	}
 
 	public function getAll() {
+		//hanya mengembalikan data yang is_active = 1
+		$this->db->where("is_active", 1);
 		return $this->db->get($this->table)->result();
 	}
 
@@ -34,9 +37,16 @@ class ModelItemTransaksi extends CI_Model {
 		return $this->db->update($this->table, array("is_active" => 0));
 	}
 
-	function get_total_penghasilan(){
-		return $this->db->query("SELECT sum(item_transaksi.harga_item_transaksi - item_transaksi.nominal_item_transaksi)
-		 as total FROM item_transaksi")->row();
-	}
+
+	function get_data_nominal(){
+        $query = $this->db->query("SELECT nominal_pulsa, SUM(stock_pulsa) AS stok FROM nominal GROUP BY nominal_pulsa");
+          
+        if($query->num_rows() > 0){
+            foreach($query->result() as $data){
+                $hasil[] = $data;
+            }
+            return $hasil;
+        }
+    }
 
 }

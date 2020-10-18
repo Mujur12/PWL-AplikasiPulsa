@@ -26,7 +26,7 @@ function sendEmail($subject, $data, $view) {
 	);
 	$body = $CI->load->view("mail/" . $view, $data, TRUE);
 	$CI->email->initialize($config);
-	$CI->email->from('noreply.alumni.sttii@gmail.com', 'PWL Aplikasi Kasir');
+	$CI->email->from('geamujur1212@gmail.com', 'Aplikasi Kasir');
 	$CI->email->to($data["email_user"]);
 	$CI->email->subject($subject);
 	$CI->email->message($body);

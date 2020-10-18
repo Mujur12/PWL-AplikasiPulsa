@@ -3,6 +3,7 @@
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
+
 class Report extends CI_Controller {
 
 	public function __construct() {
@@ -10,10 +11,10 @@ class Report extends CI_Controller {
 		isLogin();
 	}
 
-	public function barang() {
-		$this->load->model("ModelBarang");
-		$listBarang = $this->ModelBarang->getAll();
-		$filename = "Daftar Barang";
+	public function pelanggan() {
+		$this->load->model("ModelPelanggan");
+		$listPelanggan = $this->ModelPelanggan->getAll();
+		$filename = "Daftar Pelanggan";
 		//langkah pembuatan excel
 		//1.Buat Objek dari Spreadsheet
 		$file = new Spreadsheet;
@@ -22,10 +23,10 @@ class Report extends CI_Controller {
 			->mergeCells("A1:E1")
 			->setCellValue("A1", $filename)
 			->setCellValue("A2", "No")
-			->setCellValue("B2", "Kode Barang")
-			->setCellValue("C2", "Nama Barang")
-			->setCellValue("D2", "Harga Barang")
-			->setCellValue("E2", "Stock Barang");
+			->setCellValue("B2", "Kode Pelanggan")
+			->setCellValue("C2", "Nama Pelanggan")
+			->setCellValue("D2", "Alamat Pelanggan")
+			->setCellValue("E2", "No Telp");
 		//2.1 Set Kosmetik dari Excel
 		$file->setActiveSheetIndex(0)
 			->getStyle("A1")
@@ -37,13 +38,13 @@ class Report extends CI_Controller {
 		//3. Load data dan populate ke excel
 		$baris = 3;
 		$no = 1;
-		foreach ($listBarang as $barang) {
+		foreach ($listPelanggan as $pelanggan) {
 			$file->setActiveSheetIndex(0)
 				->setCellValue("A" . $baris, $no++)
-				->setCellValue("B" . $baris, $barang->kode_barang)
-				->setCellValue("C" . $baris, $barang->nama_barang)
-				->setCellValue("D" . $baris, $barang->harga_barang)
-				->setCellValue("E" . $baris, $barang->stock_barang);
+				->setCellValue("B" . $baris, $pelanggan->kode_pelanggan)
+				->setCellValue("C" . $baris, $pelanggan->nama_pelanggan)
+				->setCellValue("D" . $baris, $pelanggan->alamat_pelanggan)
+				->setCellValue("E" . $baris, $pelanggan->no_telp);
 			$baris++;
 		}
 		//3.1 Kosmetik
